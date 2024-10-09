@@ -1,26 +1,27 @@
 import React from 'react';
-import { Hotel } from '../types/Hotel';
 import HotelItem from './HotelItem';
-
+import { Hotel } from '../types/Hotel';
 
 interface HotelListProps {
-  hotels: Hotel[];
+  results: {
+    hotels?: Hotel[];
+    countries?: { country: string }[];
+    cities?: { name: string }[];
+  };
 }
 
-export const HotelList: React.FC<HotelListProps> = ({ hotels }) => (
+const Section: React.FC<{ title: string; items: any[]; renderItem: (item: any, index: number) => React.ReactNode }> = ({ title, items, renderItem }) => (
+  <>
+    <h2>{title}</h2>
+    {items.length ? items.map(renderItem) : <p>No {title.toLowerCase()} matched</p>}
+  </>
+);
+
+export const HotelList: React.FC<HotelListProps> = ({ results }) => (
   <div className="search-dropdown-menu dropdown-menu w-100 show p-2 mt-2">
-    <h2>Hotels</h2>
-    {hotels.length ? (
-      hotels.map((hotel, index) => (
-        <HotelItem key={index} hotel={hotel} />
-      ))
-    ) : (
-      <p>No Hotels matched</p>
-    )}
-    <h2>Countries</h2>
-    <p>No countries matched</p>
-    <h2>Cities</h2>
-    <p>No cities matched</p>
+    <Section title="Hotels" items={results.hotels || []} renderItem={(hotel, index) => <HotelItem key={index} hotel={hotel} />} />
+    <Section title="Countries" items={results.countries || []} renderItem={(country, index) => <p key={index}>{country.country}</p>} />
+    <Section title="Cities" items={results.cities || []} renderItem={(city, index) => <p key={index}>{city.name}</p>} />
   </div>
 );
 

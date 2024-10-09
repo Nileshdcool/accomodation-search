@@ -1,22 +1,32 @@
 import { useState, ChangeEvent } from 'react';
-import { Hotel } from './types/Hotel';
-import { fetchAndFilterHotels } from './services/hotel.service';
+import { Subscription } from 'rxjs';
 import SearchInput from './components/SearchInput';
 import HotelList from './components/HotelList';
+import { fetchAndFilterResults } from './services/hotel.service';
 
 function App() {
-  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [results, setResults] = useState<any>([]);
   const [showClearBtn, setShowClearBtn] = useState<boolean>(false);
+  let subscription: Subscription;
 
-  const fetchData = async (event: ChangeEvent<HTMLInputElement>) => {
+  const fetchData = (event: ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setShowClearBtn(!!query);
-    setHotels(query ? await fetchAndFilterHotels(query) : []);
+
+    if (subscription) {
+      subscription.unsubscribe();
+    }
+
+    if (query) {
+      subscription = fetchAndFilterResults(query).subscribe(setResults);
+    } else {
+      setResults([]);
+    }
   };
 
   const clearSearch = () => {
     setShowClearBtn(false);
-    setHotels([]);
+    setResults([]);
   };
 
   return (
@@ -26,7 +36,7 @@ function App() {
           <div className="col-md-6">
             <div className="dropdown">
               <SearchInput onChange={fetchData} showClearBtn={showClearBtn} onClear={clearSearch} />
-              <HotelList hotels={hotels} />
+              <HotelList results={results} />
             </div>
           </div>
         </div>
