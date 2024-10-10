@@ -16,7 +16,7 @@ function App() {
 
   useEffect(() => {
     const subscription = searchSubject.current.pipe(
-      debounceTime(1000)
+      debounceTime(500)
     ).subscribe(query => {
       if (query) {
         setLoading(true);

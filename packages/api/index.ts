@@ -5,6 +5,7 @@ import { getCities } from "controllers/city.controller";
 import { getCountries } from "controllers/country.controller";
 import { getHotels } from "controllers/hotel.controller";
 import { connectToDatabase } from "db";
+import { errorHandler } from "middlewares/errorHandler";
 
 dotenv.config();
 
@@ -26,6 +27,8 @@ connectToDatabase(DATABASE_URL).then(() => {
   app.get('/hotels', getHotels);
   app.get('/cities', getCities);
   app.get('/countries', getCountries);
+
+  app.use(errorHandler);
 
   app.listen(PORT, () => {
     console.log(`API Server Started at ${PORT}`);
