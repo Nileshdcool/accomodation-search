@@ -80,7 +80,59 @@ body {
   margin: .5rem;
 }
 
+/* index.css */
 .search-dropdown-menu {
   max-height: 450px;
-  overflow: scroll;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.section {
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hotel-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+
+.hotel-item-content {
+  display: flex;
+  align-items: center;
+}
+
+.hotel-name {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.hotel-location {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.no-matches {
+  color: #999;
+  font-style: italic;
+}
+
+.divider {
+  margin: 0.5rem 0;
 }
