@@ -5,12 +5,12 @@ import { Subject, debounceTime } from "rxjs";
 import HotelList from "../components/HotelList";
 import SearchInput from "../components/SearchInput";
 import { fetchAndFilterResults } from "../services/hotel.service";
+import { useAppContext } from "../context/AppContext";
 
 function Home() {
-    const [results, setResults] = useState<any>(null);
     const [showClearBtn, setShowClearBtn] = useState<boolean>(false);
     const searchSubject = useRef(new Subject<string>());
-    const [loading, setLoading] = useState<boolean>(false);
+    const { setResults, loading, setLoading, setHotels, setCities, setCountries } = useAppContext();
 
     useEffect(() => {
         const subscription = searchSubject.current.pipe(
@@ -20,11 +20,17 @@ function Home() {
                 setLoading(true);
                 fetchAndFilterResults(query).subscribe(data => {
                     setResults(data);
+                    setHotels(data.hotels);
+                    setCities(data.cities);
+                    setCountries(data.countries);
                     setLoading(false);
                     toast.success('Results fetched successfully!');
                 });
             } else {
                 setResults(null);
+                setHotels([]);
+                setCities([]);
+                setCountries([]);
                 toast.error('No data to fetch');
             }
         });
@@ -40,6 +46,9 @@ function Home() {
     const clearSearch = () => {
         setShowClearBtn(false);
         setResults(null);
+        setHotels([]);
+        setCities([]);
+        setCountries([]);
     };
     return (
         <div className="App">
@@ -62,7 +71,7 @@ function Home() {
                                     strokeWidthSecondary={2}
                                 />
                             ) : (
-                                <HotelList results={results} />
+                                <HotelList />
                             )}
                         </div>
                     </div>
