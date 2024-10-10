@@ -1,18 +1,17 @@
 import { API_URL } from "../constants/config";
 import { Hotel } from "../types/Hotel";
-import axios from 'axios';
 import { forkJoin, from, of } from 'rxjs';
-import { debounceTime, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { axiosInstance } from "../utils/axios-interceptor.service";
 
 export const fetchAndFilterResults = (value: string) => {
   const lowerValue = value.toLowerCase();
 
   return of(lowerValue).pipe(
-    debounceTime(500),
     switchMap(() => {
-      const hotels$ = from(axios.get<Hotel[]>(`${API_URL}/hotels`));
-      const cities$ = from(axios.get<{ name: string }[]>(`${API_URL}/cities`));
-      const countries$ = from(axios.get<{ country: string }[]>(`${API_URL}/countries`));
+      const hotels$ = from(axiosInstance.get<Hotel[]>(`${API_URL}/hotels`));
+      const cities$ = from(axiosInstance.get<{ name: string }[]>(`${API_URL}/cities`));
+      const countries$ = from(axiosInstance.get<{ country: string }[]>(`${API_URL}/countries`));
 
       return forkJoin([hotels$, cities$, countries$]).pipe(
         map(([hotelsResponse, citiesResponse, countriesResponse]) => {
