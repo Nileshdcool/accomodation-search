@@ -88,9 +88,15 @@ For larger or more time-intensive changes, you're welcome to outline your ideas 
 
 ### Write-up
 
-<!-- Write-up/conclusion section -->
+The implementation of the search functionality allows for efficient and performant searches across Hotels, Cities, and Countries. The partial search capability ensures that users can find relevant results even with incomplete input. The filtering mechanism for Hotels by location adds an extra layer of usability, making it easier for users to find accommodations in their desired areas.
 
-_When all the behaviour is implemented, feel free to add some observations or conclusions you like to share in the section_
+One area for potential improvement is the optimization of the search algorithm to handle larger datasets more efficiently. Additionally, implementing a debounce mechanism for the search input could enhance performance by reducing the number of search operations triggered by rapid user input.
+
+Another consideration is the user interface design. Ensuring that the search results are displayed in a user-friendly manner can significantly improve the user experience. This includes clear labeling, intuitive navigation, and responsive design to cater to various devices.
+
+Security is also a critical aspect. Implementing measures to prevent DB injection and other common vulnerabilities will help protect the application and its data.
+
+Overall, the approach taken balances functionality and performance, providing a solid foundation for further enhancements and scalability.
 
 ### Database structure
 

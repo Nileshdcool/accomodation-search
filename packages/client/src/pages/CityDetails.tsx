@@ -1,13 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-
-interface City {
-    id: string;
-    name: string;
-    population: number;
-    description: string;
-}
+import { City } from '../types/City.interface';
 
 export default function CityDetails() {
     const { id } = useParams<{ id: string }>();

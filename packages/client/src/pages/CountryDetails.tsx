@@ -1,13 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-
-interface Country {
-    id: string;
-    country: string;
-    countryisocode: string;
-    description: string;
-}
+import { Country } from '../types/Country.interface';
 
 export default function CountryDetails() {
     const { id } = useParams<{ id: string }>();
