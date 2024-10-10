@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Hotel } from '../types/Hotel';
 
 interface HotelItemProps {
@@ -7,10 +8,10 @@ interface HotelItemProps {
 
 export const HotelItem: React.FC<HotelItemProps> = ({ hotel }) => (
   <li>
-    <a href={`/hotels/${hotel._id}`} className="dropdown-item">
+    <Link to={`/hotels/${hotel._id}`} className="dropdown-item">
       <i className="fa fa-building mr-2"></i>
       {hotel.hotel_name}
-    </a>
+    </Link>
     <hr className="divider" />
   </li>
 );

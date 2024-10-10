@@ -1,6 +1,7 @@
 import React from 'react';
 import HotelItem from './HotelItem';
 import { Hotel } from '../types/Hotel';
+import { Link } from 'react-router-dom';
 
 interface HotelListProps {
   results: {
@@ -20,8 +21,16 @@ const Section: React.FC<{ title: string; items: any[]; renderItem: (item: any, i
 export const HotelList: React.FC<HotelListProps> = ({ results }) => (
   <div className="search-dropdown-menu dropdown-menu w-100 show p-2 mt-2">
     <Section title="Hotels" items={results?.hotels || []} renderItem={(hotel, index) => <HotelItem key={index} hotel={hotel} />} />
-    <Section title="Countries" items={results?.countries || []} renderItem={(country, index) => <p key={index}>{country.country}</p>} />
-    <Section title="Cities" items={results?.cities || []} renderItem={(city, index) => <p key={index}>{city.name}</p>} />
+    <Section title="Countries" items={results?.countries || []} renderItem={(country, index) => (
+      <Link key={index} to={`/countries/${country._id}`} className="dropdown-item">
+        {country.country}
+      </Link>
+    )} />
+    <Section title="Cities" items={results?.cities || []} renderItem={(city, index) => (
+      <Link key={index} to={`/cities/${city._id}`} className="dropdown-item">
+        {city.name}
+      </Link>
+    )} />
   </div>
 );
 
